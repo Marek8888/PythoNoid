@@ -5,3 +5,4 @@ class Settings:
         self.screen = sneaky.screen
         self.screen_width = 800
         self.screen_height = 800
+        self.screen_color = (230,230,230)
