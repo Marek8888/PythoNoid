@@ -2,6 +2,9 @@ import pygame
 
 import sys
 
+from settings import Settings
+
+
 class PythoNoid:
     def __init__(self):
         pygame.init()
@@ -12,6 +15,8 @@ class PythoNoid:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
+
+            pygame.display.flip()
 
 if __name__ == '__main__':
     game = PythoNoid()
