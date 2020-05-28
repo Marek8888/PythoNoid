@@ -9,6 +9,20 @@ class Board:
         self.rect = self.image.get_rect()
         self.rect.midbottom = self.screen_rect.midbottom
 
+        self.x = float(self.rect.x)
+        # Set board speed
+        self.speed = 1
+
+        self.is_moving_right = False
+        self.is_moving_left = False
+
     def blitme(self):
         self.screen.blit(self.image, self.rect)
+
+    def update_move(self):
+        if self.is_moving_right:
+            self.x += self.speed
+        if self.is_moving_left:
+            self.x -= self.speed
+        self.rect.x = self.x
 
