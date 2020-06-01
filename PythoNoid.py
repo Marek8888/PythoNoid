@@ -8,6 +8,8 @@ from board import Board
 
 from ball import Ball
 
+import math
+
 
 class PythoNoid:
     def __init__(self):
@@ -55,43 +57,45 @@ class PythoNoid:
         self.ball.direction_x = -1
 
     def check_ball_hit(self):
+        # Print game over if ball below display
+        if self.ball.rect.y >= self.settings.screen_height:
+            print ('GAME OVER !')
+            sys.exit()
+
         if pygame.sprite.groupcollide(self.board_sprite, self.balls, False, False):
             if self.ball.rect.x in self.board.incline_0[0] or self.ball.rect.x in self.board.incline_0[1]:
                 self.ball.direction_y = -1
                 self.ball.incline = 0
-            elif self.ball.rect.x in self.board.incline_medium[0]:
+            if self.ball.rect.x in self.board.incline_medium[0]:
                 print ('incline medium left' )
                 self.ball.x0 = self.ball.x
                 self.ball.incline = -1
-            elif self.ball.rect.x in self.board.incline_medium[1]:
+            if self.ball.rect.x in self.board.incline_medium[1]:
                 print('incline medium right')
                 self.ball.x0 = self.ball.x
                 self.ball.incline = 1
-            elif self.ball.rect.x in self.board.incline_high[0]:
+            if self.ball.rect.x in self.board.incline_high[0]:
                 print('high left')
                 self.ball.x0 = self.ball.rect.x
                 self.ball.incline = -2
-            elif self.ball.rect.x in self.board.incline_high[1]:
+            if self.ball.rect.x in self.board.incline_high[1]:
                 print('high right')
                 self.ball.x0 = self.ball.rect.x
                 self.ball.incline = 2
-        if self.ball.rect.x <= 0:
-            self.ball.x0 = 0
-            self.ball.incline = self.ball.incline * (-1)
-            print('left wall')
+        # Ball vs discplay edges
 
     def run_game(self):
         while True:
             self.check_events()
             self.screen.fill(self.settings.screen_color)
             self.board.blitme()
-            self.ball.blitme()
             self.board.update_move()
-            self.check_ball_hit()
-            #print(self.board.incline_0, self.board.incline_medium, self.board.incline_high)
-            print(f" incline:{self.ball.incline}, x:{self.ball.rect.x}, x0:{self.ball.x0}, y:{self.ball.rect.y}")
-            pygame.display.flip()
+            #qprint(self.board.incline_0, self.board.incline_medium, self.board.incline_high)
             self.ball.update()
+            print(f" incline:{self.ball.incline}, x:{self.ball.rect.x}, x0:{self.ball.x0}, y:{self.ball.rect.y}")
+            self.check_ball_hit()
+            self.ball.blitme()
+            pygame.display.flip()
             self.settings.clock.tick(30)
 
 
