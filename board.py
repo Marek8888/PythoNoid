@@ -20,6 +20,10 @@ class Board(Sprite):
 
         self.is_moving_right = False
         self.is_moving_left = False
+        # Determine different incline zone depends on where ball hit the board
+        self.incline_0 = []
+        self.incline_medium = []
+        self.incline_high = []
 
     def blitme(self):
         """Prints board at the display"""
@@ -32,9 +36,10 @@ class Board(Sprite):
         if self.is_moving_left:
             self.x -= self.speed
         self.rect.x = self.x
-
-        # Determine different incline zone depends on where ball hit the board
-        self.incline_0 = range(self.rect.centerx - 15, self.rect.centerx + 15)
+        self.incline_0 = [range(self.rect.centerx - 15, self.rect.centerx),
+                          range(self.rect.centerx, self.rect.centerx + 15)]
+        self.incline_medium = [range(self.rect.left + 10, self.rect.centerx - 15),
+                               range(self.rect.centerx + 15, self.rect.right - 10)]
         self.incline_high = [range(self.rect.left, self.rect.left + 10),
                              range(self.rect.right - 10, self.rect.right)]
 
